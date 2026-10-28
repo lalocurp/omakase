@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMAKASE | Panel de Control & Tienda</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Encabezado Principal -->
+    <header class="navbar">
+        <div class="logo">
+            <h1>OMAKASE<span class="dot">.</span></h1>
+            <span class="subtext">URBAN CHEFWEAR</span>
+        </div>
+        <!-- Navegación por Pestañas -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="catalogo">Catálogo / Tienda</button>
+            <button class="tab-btn" data-tab="productos">Agregar Producto</button>
+            <button class="tab-btn" data-tab="usuarios">Registro Usuarios</button>
+            <button class="tab-btn" data-tab="pedidos">Crear Pedido</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <!-- SECCIÓN 1: CATÁLOGO Y TIENDA -->
+        <section id="catalogo" class="tab-content active">
+            <div class="section-header">
+                <h2>Colección Activa</h2>
+                <p>Vista general del catálogo registrado en la base de datos.</p>
+            </div>
+            <div class="products-grid" id="grid-productos">
+                <!-- Tarjeta de ejemplo -->
+                <div class="product-card">
+                    <div class="badge-tag">S / M / L</div>
+                    <h3>Filipina Oversize "Kimono Tech"</h3>
+                    <span class="category-tag">Filipinas</span>
+                    <p class="price">$1,250.00 MXN</p>
+                    <p class="stock">Stock: 15 unidades</p>
+                    <button class="btn-salmon full-width">Añadir al Carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: FORMULARIO PRODUCTOS (Tabla: productos) -->
+        <section id="productos" class="tab-content">
+            <div class="form-container">
+                <h2>Registrar Nuevo Producto</h2>
+                <p>Completa los campos para insertar registros en la tabla <code>productos</code>.</p>
+                
+                <form action="insertar_producto.php" method="POST" class="crud-form">
+                    <div class="form-group">
+                        <label for="nombre_prod">Nombre de la Prenda:</label>
+                        <input type="text" id="nombre_prod" name="nombre" placeholder="Ej. Hoodie Raw Edge" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="categoria_prod">Categoría:</label>
+                            <select id="categoria_prod" name="categoria" required>
+                                <option value="Filipinas">Filipinas</option>
+                                <option value="Delantales">Delantales</option>
+                                <option value="Hoodies">Hoodies</option>
+                                <option value="Pantalones">Pantalones</option>
+                                <option value="Accesorios">Accesorios</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="talla_prod">Talla:</label>
+                            <select id="talla_prod" name="talla" required>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="Unitalla">Unitalla</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="precio_prod">Precio ($ MXN):</label>
+                            <input type="number" step="0.01" id="precio_prod" name="precio" placeholder="890.00" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stock_prod">Stock Inicial:</label>
+                            <input type="number" id="stock_prod" name="stock" placeholder="20" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-salmon btn-large">Guardar Producto en BD</button>
+                </form>
+            </div>
+        </section>
+
+<!-- SECCIÓN 3: FORMULARIO USUARIOS Y DIRECCIÓN (Tablas: usuarios y direcciones) -->
+<section id="usuarios" class="tab-content">
+    <div class="form-container wide">
+        <h2>Registrar Nuevo Usuario</h2>
+        <p>Captura los datos del cliente y su dirección de entrega para alimentarlos a las tablas <code>usuarios</code> y <code>direcciones</code>.</p>
+
+        <form action="insertar_usuario.php" method="POST" class="crud-form">
+            
+            <!-- DATOS DE CUENTA -->
+            <h3>Datos de Cuenta</h3>
+            
+            <div class="form-group">
+                <label for="nombre_user">Nombre Completo:</label>
+                <input type="text" id="nombre_user" name="nombre" placeholder="Ej. Chef Kenji Sato" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email_user">Correo Electrónico:</label>
+                <input type="email" id="email_user" name="email" placeholder="kenji@omakase.com" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password_user">Contraseña:</label>
+                    <input type="password" id="password_user" name="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rol_user">Rol de Usuario:</label>
+                    <select id="rol_user" name="rol" required>
+                        <option value="cliente">Cliente</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- DATOS DE DIRECCIÓN -->
+            <h3>Dirección de Envío</h3>
+
+            <div class="form-group">
+                <label for="calle_user">Calle y Número:</label>
+                <input type="text" id="calle_user" name="calle_numero" placeholder="Ej. Av. Insurgentes Sur 123 Int. 4B" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="colonia_user">Colonia / Zona:</label>
+                    <input type="text" id="colonia_user" name="colonia" placeholder="Ej. Roma Norte" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ciudad_user">Ciudad:</label>
+                    <input type="text" id="ciudad_user" name="ciudad" placeholder="Ej. Ciudad de México" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cp_user">Código Postal:</label>
+                    <input type="text" id="cp_user" name="codigo_postal" placeholder="Ej. 06700" maxlength="10" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tel_user">Teléfono de Contacto:</label>
+                    <input type="tel" id="tel_user" name="telefono" placeholder="Ej. 5512345678" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-salmon btn-large">Guardar Usuario y Dirección</button>
+        </form>
+    </div>
+</section>
+
+        <!-- SECCIÓN 4: CREACIÓN DE PEDIDOS (Tablas: pedidos y detalle_pedidos) -->
+        <section id="pedidos" class="tab-content">
+            <div class="form-container wide">
+                <h2>Procesar Nuevo Pedido</h2>
+                <p>Genera la venta vinculando la tabla <code>pedidos</code> y <code>detalle_pedidos</code>.</p>
+
+                <form action="insertar_pedido.php" method="POST" class="crud-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="select_usuario">Seleccionar Cliente (ID Usuario):</label>
+                            <select id="select_usuario" name="id_usuario" required>
+                                <option value="1">1 - Chef Kenji Sato (kenji@omakase.com)</option>
+                                <option value="2">2 - Maria Delgado (maria@gmail.com)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado_pedido">Estado del Pedido:</label>
+                            <select id="estado_pedido" name="estado" required>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Completado">Completado</option>
+                                <option value="Cancelado">Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="divider">
+                    <h3>Detalle de Prendas</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="select_producto">Producto:</label>
+                            <select id="select_producto" name="id_producto" required>
+                                <option value="1" data-precio="1250.00">Filipina Kimono Tech - $1,250.00</option>
+                                <option value="2" data-precio="650.00">Delantal Heavy Duty - $650.00</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cant_producto">Cantidad:</label>
+                            <input type="number" id="cant_producto" name="cantidad" value="1" min="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="precio_unitario">Precio Unitario:</label>
+                            <input type="number" step="0.01" id="precio_unitario" name="precio_unitario" value="1250.00" readonly>
+                        </div>
+                    </div>
+
+                    <div class="total-box">
+                        <span>Total Calculado:</span>
+                        <strong id="total_pedido">$1,250.00 MXN</strong>
+                        <input type="hidden" id="input_total" name="total" value="1250.00">
+                    </div>
+
+                    <button type="submit" class="btn-salmon btn-large">Finalizar y Guardar Pedido</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
